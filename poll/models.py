@@ -42,17 +42,21 @@ class Choice(models.Model):
     def __str__(self):
         return self.choice_text
 
+    class Meta:
+        verbose_name = 'Вариант'
+        verbose_name_plural = 'Варианты'
+
 
 class Answer(models.Model):
     user_id = models.IntegerField()
     poll = models.ForeignKey(Polls, on_delete=models.CASCADE, related_name='poll')
     question = models.ForeignKey(Questions, on_delete=models.CASCADE, related_name='question_from_answer')
     choice = models.ForeignKey(Choice, related_name='choice', on_delete=models.CASCADE, null=True)
-    choice_text = models.CharField('Ответ', max_length=256, null=True, blank=True)
-
-    def __str__(self):
-        return self.choice_text
+    choice_text = models.CharField('Ответ', max_length=256, default='')
 
     class Meta:
         verbose_name = 'Ответ'
         verbose_name_plural = 'Ответы'
+
+    def __str__(self):
+        return self.choice_text
